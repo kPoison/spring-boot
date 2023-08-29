@@ -1,6 +1,15 @@
 package ru.kpoison.springboot.model;
 
-import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.PositiveOrZero;
 
 
 @Entity
@@ -10,8 +19,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "name")
+    @Pattern(regexp = "[a-zA-Z]+", message = "Name should contain only characters")
     private String name;
     @Column(name = "age")
+    @NotNull(message = "Age should not be empty")
+    @PositiveOrZero(message = "Age should be greater than 0")
     private Integer age;
 
     public User() {

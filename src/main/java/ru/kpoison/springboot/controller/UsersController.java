@@ -1,7 +1,9 @@
 package ru.kpoison.springboot.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kpoison.springboot.model.User;
 import ru.kpoison.springboot.service.UserService;
@@ -27,7 +29,11 @@ public class UsersController {
     }
 
     @PostMapping()
-    public String create(@ModelAttribute("user") User user) {
+    public String create(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "users/new";
+        }
+
         userService.save(user);
         return "redirect:/users";
     }
@@ -39,7 +45,11 @@ public class UsersController {
     }
 
     @PatchMapping ("/{id}")
-    public String update(@ModelAttribute("user") User user) {
+    public String update(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "users/edit";
+        }
+
         userService.update(user);
         return "redirect:/users";
     }

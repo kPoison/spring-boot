@@ -5,15 +5,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Add new user</title>
+    <style>
+        .error{
+            color: red;
+        }
+    </style>
 </head>
 <body>
 
 <form th:method="POST" th:action="@{/users}" th:object="${user}">
     <label for="name">Enter name:</label>
     <input type="text" th:field="*{name}" id="name"/>
+    <span class="error" th:if="${#fields.hasErrors('name')}"  th:errors="*{name}"></span>
     <br/>
     <label for="age">Enter age:</label>
     <input type="number" th:field="*{age}" id="age"/>
+    <span class="error" th:if="${#fields.hasErrors('age')}"  th:errors="*{age}"></span>
     <br/>
     <input type="submit" value="Save"/>
 </form>
